@@ -1,18 +1,18 @@
 [![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-718a45dd9cf7e7f842a935f5ebbe5719a5e09af4491e668f4dbf3b35d5cca122.svg)](https://classroom.github.com/online_ide?assignment_repo_id=12803286&assignment_repo_type=AssignmentRepo)
 :warning: Everything between << >> needs to be replaced (remove << >> after replacing)
 
-# << Project Title >>
-## CS110 Final Project  << Semester, Year >>
+# PING PADDLES
+## CS110 Final Project  First Semester, 2023
 
 ## Team Members
 
-<< List team member names >>
+Aaron Damsky and Joseph Kesler
 
 ***
 
 ## Project Description
 
-<< Give an overview of your project >>
+Our program is a game that replicates the classic arcade game, Pong, where two players play against each other hitting a ball back and forth with paddles. The goal is to try and get the ball past the other teams paddle.
 
 ***    
 
