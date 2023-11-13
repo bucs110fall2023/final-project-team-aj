@@ -30,11 +30,12 @@ Our program is a game that replicates the classic arcade game, Pong, where two p
 
 ### Features
 
-1. << Feature 1 >>
-2. << Feature 2 >>
-3. << Feature 3 >>
-4. << Feature 4 >>
-5. << Feature 5 >>
+1. Home Screen(s)
+2. Game Screen (including score)
+3. Paddles
+4. Ball
+5. Obstacles
+6. Game Over Screen
 
 ### Classes
 
