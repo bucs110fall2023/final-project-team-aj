@@ -1,10 +1,11 @@
 import pygame
-from controller import Controller #import your controller
+from src.controller import Controller #import your controller
 
 def main():
     pygame.init()
-    screen = pygame.display.set_mode()#Create an instance on your controller object
-    mainloop(screen)#Call your mainloop
+    pygame.display.set_mode()
+    c1 = Controller() #Create an instance on your controller object
+    c1.mainloop() #Call your mainloop
     
     ###### NOTHING ELSE SHOULD GO IN main(), JUST THE ABOVE 3 LINES OF CODE ######
 
