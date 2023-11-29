@@ -7,12 +7,17 @@ class Controller:
         pygame.init()
         self.screen = pygame.display.set_mode()
         
+    def score(self):
+        pass
+    
+    def collision(self):
+        pass
+                
     def startscreenloop(self):
         self.screen_color = (6, 168, 0)
         self.screen.fill(self.screen_color)
         pygame.display.flip()
-        
-    
+
     def gameloop(self):
         pass
     
