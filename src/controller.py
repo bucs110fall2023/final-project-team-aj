@@ -1,5 +1,5 @@
 import pygame
-# from ball import Ball
+from src.startscreen import Startscreen
 
 class Controller:
     
@@ -8,58 +8,45 @@ class Controller:
         self.window_width = 750
         self.window_height = 800
         self.screen = pygame.display.set_mode([self.window_width, self.window_height])
+        self.state = "HOME"
         
     def score(self):
-        pass
+        self.score1 = 0
+        self.score2 = 0
+        #if ball collides with the bottom rectangle, score1 goes up by one
+        #if ball collides with the top rectangle, score2 goes up by one
     
     def collision(self):
         pass
                 
     def startscreenloop(self):
-        self.screen_color = (6, 168, 0)
-        self.screen.fill(self.screen_color)
-        
-        font = pygame.font.Font(None, 100)
-        text = font.render("PADDLES", True, "white")
-        intro_text_rect = text.get_rect()
-        half_text_width = intro_text_rect.width // 2
-        half_text_height = intro_text_rect.height // 2
-        intro_text_x_pos = (self.window_width // 2) - half_text_width
-        intro_text_y_pos = (self.window_height // 4) - half_text_height
-        intro_text_rect_center = (intro_text_x_pos, intro_text_y_pos)
-        self.screen.blit(text, intro_text_rect_center)
-        
-        font = pygame.font.Font(None, 48)
-        text = font.render("By: Aaron Damsky and Joseph Kessler", True, "white")
-        text_rect = text.get_rect()
-        half_text_width = text_rect.width // 2
-        half_text_height = text_rect.height // 2
-        creators_text_x_pos = (self.window_width // 2) - half_text_width
-        creators_text_y_pos = intro_text_y_pos + intro_text_rect.height
-        creators_text_rect_center = (creators_text_x_pos, creators_text_y_pos)
-        self.screen.blit(text, creators_text_rect_center)
-        
-        font = pygame.font.Font(None, 60)
-        text = font.render("PRESS START", True, "white")
-        starttext_rect = text.get_rect()
-        half_text_width = starttext_rect.width // 2
-        half_text_height = starttext_rect.height // 2
-        starttext_x_pos = (self.window_width // 2) - half_text_width
-        starttext_y_pos = self.window_height - (self.window_height // 3)
-        starttext_rect_center = (starttext_x_pos, starttext_y_pos)
-        self.screen.blit(text, starttext_rect_center)
-        starttext_hitbox = pygame.Rect(starttext_x_pos, starttext_y_pos, starttext_rect.width, starttext_rect.height)
-        
-        pygame.display.flip()
+        s = Startscreen()
+        s.startscreen()
 
     def gameloop(self):
-        pass
+        self.screen_color = (6, 168, 0)
+        self.screen.fill(self.screen_color)
+        goal_area1 = pygame.Rect(0, 0, self.window_width, 20)
+        goal_area2 = pygame.Rect(0, self.window_height - 20, self.window_width, 20)
+        pygame.draw.rect(self.screen, "white", goal_area1)
+        pygame.draw.rect(self.screen, "white", goal_area2)
+        pygame.draw.line(self.screen, "white", (0, self.window_height/2), (self.window_width, self.window_height/2), 2)
+        pygame.display.flip()
     
     def endscreenloop(self):
         pass
     
     def mainloop(self):
-        self.startscreenloop()
+        self.gameloop()
+        # while self.state == "HOME":
+        #     self.startscreenloop()
+        #     for event in pygame.event.get():
+        #         if event.type == pygame.MOUSEBUTTONDOWN:
+        #             if self.starttext_hitbox.collidepoint(event.pos):
+        #                 self.state = "GAME"
+        # while self.state == "GAME":
+        #     self.gameloop()
+        
         #Exit the screen when user clicks out
         running = True
         while running:
