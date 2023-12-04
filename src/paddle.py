@@ -2,13 +2,13 @@ import pygame
 from src.screens import Screens
 
 class Paddle(Screens):
-    def __init__(self, x, y, width, height):
+    def __init__(self, x=1, y=1, width=150, height=20):
         super().__init__()
         self.xpos = self.starting_xpos = x
         self.ypos = self.starting_ypos = y
         self.width = width
         self.height = height
-        pygame.draw.rect(self.screen, "white", (self.xpos, self.ypos), self.width, self.height)
+        pygame.draw.rect(self.screen, "white", (self.xpos, self.ypos, self.width, self.height))
         
     def move(self):
         self.paddle_vel = 4

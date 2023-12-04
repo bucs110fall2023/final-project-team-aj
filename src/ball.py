@@ -7,8 +7,9 @@ class Ball(Screens):
         self.xpos = self.starting_xpos = x
         self.ypos = self.starting_ypos = y
         self.radius = radius
-        self.x_vel = 5
-        self.y_vel = 0
+        self.max_vel = 5
+        self.x_vel = 0
+        self.y_vel = self.max_vel
         pygame.draw.circle(self.screen, "white", (self.xpos, self.ypos), self.radius)
         
     def move(self):

@@ -46,10 +46,6 @@ class Screens:
     def gamescreen(self):
         self.screen_color = (6, 168, 0)
         self.screen.fill(self.screen_color)
-        goal_area1 = pygame.Rect(0, 0, self.window_width, 20)
-        goal_area2 = pygame.Rect(0, self.window_height - 20, self.window_width, 20)
-        pygame.draw.rect(self.screen, "white", goal_area1)
-        pygame.draw.rect(self.screen, "white", goal_area2)
         pygame.draw.line(self.screen, "white", (0, self.window_height/2), (self.window_width, self.window_height/2), 2)
         
         pygame.display.flip()
