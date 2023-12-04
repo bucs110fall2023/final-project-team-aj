@@ -1,6 +1,6 @@
 import pygame
 
-class Startscreen:
+class Screens:
     def __init__(self):
         pygame.init()
         self.window_width = 750
@@ -10,7 +10,6 @@ class Startscreen:
     def startscreen(self):
         self.screen_color = (6, 168, 0)
         self.screen.fill(self.screen_color)
-        
         font = pygame.font.Font(None, 100)
         text = font.render("PADDLES", True, "white")
         intro_text_rect = text.get_rect()
@@ -41,5 +40,16 @@ class Startscreen:
         starttext_rect_center = (starttext_x_pos, starttext_y_pos)
         self.screen.blit(text, starttext_rect_center)
         self.starttext_hitbox = pygame.Rect(starttext_x_pos, starttext_y_pos, starttext_rect.width, starttext_rect.height)
+        
+        pygame.display.flip()
+        
+    def gamescreen(self):
+        self.screen_color = (6, 168, 0)
+        self.screen.fill(self.screen_color)
+        goal_area1 = pygame.Rect(0, 0, self.window_width, 20)
+        goal_area2 = pygame.Rect(0, self.window_height - 20, self.window_width, 20)
+        pygame.draw.rect(self.screen, "white", goal_area1)
+        pygame.draw.rect(self.screen, "white", goal_area2)
+        pygame.draw.line(self.screen, "white", (0, self.window_height/2), (self.window_width, self.window_height/2), 2)
         
         pygame.display.flip()

@@ -1,37 +1,52 @@
 import pygame
-from src.startscreen import Startscreen
+from src.screens import Screens
+from src.ball import Ball
+from src.paddle import Paddle
 
 class Controller:
     
-    def __init__(self):
+    def __init__(self, up_score, down_score):
         pygame.init()
-        self.window_width = 750
-        self.window_height = 800
-        self.screen = pygame.display.set_mode([self.window_width, self.window_height])
-        self.state = "HOME"
+        self.s = Screens()
+        self.ball = Ball()
+        self.paddle = Paddle()
+        self.up_score = up_score
+        self.down_score = down_score
         
     def score(self):
-        self.score1 = 0
-        self.score2 = 0
-        #if ball collides with the bottom rectangle, score1 goes up by one
-        #if ball collides with the top rectangle, score2 goes up by one
+        font = pygame.font.Font(None, 48)
+        self.up_score_text = font.render(f"{self.up_score}", True, "white")
+        self.down_score_text = font.render(f"{self.down_score}", True, "white")
+        self.s.screen.blit(self.up_score_text, (self.s.window_width - 10, self.s.window_height/2 - 10))
+        self.s.screen.blit(self.down_score_text, (self.s.window_width - 10, self.s.window_height/2 + 10))
     
     def collision(self):
-        pass
+        if self.ball.xpos - self.ball.radius == 0:
+            self.ball.x_vel *= -1
+        elif self.ball.xpos + self.ball.radius == self.s.window_width:
+            self.ball.x_vel *= -1
+            
+        if self.ball.y_vel < 0:
+            if self.ball.xpos - self.ball.radius <= self.paddle.xpos + self.paddle.height and self.ball.xpos + self.ball.radius >= self.paddle.xpos + self.paddle.height:
+                if self.ball.ypos + self.ball.radius == self.paddle.ypos + self.paddle.width:
+                    self.ball.y_vel *= -1
+                    
+                    self.center_paddle = (self.paddle.xpos + self.paddle.height) / 2
+                    self.difference_x = self.center_paddle - self.ball.xpos
+                    #LEFT OFF HERE
                 
+      
     def startscreenloop(self):
-        s = Startscreen()
-        s.startscreen()
+        self.s.startscreen()
 
     def gameloop(self):
-        self.screen_color = (6, 168, 0)
-        self.screen.fill(self.screen_color)
-        goal_area1 = pygame.Rect(0, 0, self.window_width, 20)
-        goal_area2 = pygame.Rect(0, self.window_height - 20, self.window_width, 20)
-        pygame.draw.rect(self.screen, "white", goal_area1)
-        pygame.draw.rect(self.screen, "white", goal_area2)
-        pygame.draw.line(self.screen, "white", (0, self.window_height/2), (self.window_width, self.window_height/2), 2)
-        pygame.display.flip()
+        self.s.gamescreen()
+        self.score()
+        self.ball.move()
+        self.ball.reset()
+        self.paddle.move()
+        self.paddle.reset()
+        
     
     def endscreenloop(self):
         pass
