@@ -4,8 +4,8 @@ from src.controller import Controller #import your controller
 def main():
     pygame.init()
     pygame.display.set_mode()
-    c1 = Controller() #Create an instance on your controller object
-    c1.mainloop() #Call your mainloop
+    c = Controller() #Create an instance on your controller object
+    c.mainloop() #Call your mainloop
     
     ###### NOTHING ELSE SHOULD GO IN main(), JUST THE ABOVE 3 LINES OF CODE ######
 
