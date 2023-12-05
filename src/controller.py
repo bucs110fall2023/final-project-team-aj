@@ -63,14 +63,13 @@ class Controller:
         self.down_paddle.move()
         self.down_paddle.reset()
         pygame.display.flip()
-        
-        
+        #CONTINUE HERE
     
     def endscreenloop(self):
         pass
     
     def mainloop(self):
-        self.gameloop()
+        self.startscreenloop()
         # while self.state == "HOME":
         #     self.startscreenloop()
         #     for event in pygame.event.get():
