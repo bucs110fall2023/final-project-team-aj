@@ -67,10 +67,14 @@ class Controller:
         #CONTINUE HERE
     
     def endscreenloop(self):
-        pass
+        self.s.endscreen()
+        # if self.red_score > self.blue_score:
+        #     winner = "RED"
+        # elif self.red_score < self.blue_score:
+        #     winner = "BLUE"
     
     def mainloop(self):
-        self.startscreenloop()
+        self.gameloop()
         # while self.state == "HOME":
         #     self.startscreenloop()
         #     for event in pygame.event.get():
