@@ -125,7 +125,7 @@ class Controller:
             
             if pygame.sprite.collide_rect(self.ball, self.blue_paddle):
                 self.ball.y_vel *= -1
-                self.ball.x_vel += random.randint(-1, 1)
+                self.ball.x_vel += random.uniform(-1, 1)
             if pygame.sprite.collide_rect(self.ball, self.red_paddle):
                 self.ball.y_vel *= -1
                 
