@@ -1,6 +1,5 @@
 import pygame
 
-
 # Model
 class Ball(pygame.sprite.Sprite):
     def __init__(self, x, y, radius):
@@ -8,7 +7,7 @@ class Ball(pygame.sprite.Sprite):
         self.starting_xpos = x
         self.starting_ypos = y
         self.radius = radius
-        self.max_vel = 5
+        self.max_vel = 1
         self.x_vel = 0
         self.y_vel = 0
         # Surface -> Rectangles

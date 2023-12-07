@@ -2,7 +2,7 @@ import pygame
 
 
 class Paddle(pygame.sprite.Sprite):
-    def __init__(self, x=1, y=1, color="white", width=150, height=20):
+    def __init__(self, x=1, y=1, color="white", width=225, height=20):
         super().__init__()
         self.starting_xpos = x
         self.starting_ypos = y
@@ -13,12 +13,12 @@ class Paddle(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.paddle_vel = 4
+        self.paddle_vel = 50
 
     def move(self, dir):
         if dir == "right":
             self.rect.x += self.paddle_vel
-        elif dir == "left":
+        if dir == "left":
             self.rect.x -= self.paddle_vel
 
     def reset(self):
