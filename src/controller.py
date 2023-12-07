@@ -1,5 +1,6 @@
 import pygame
 import random
+import math
 
 from src.ball import Ball
 from src.paddle import Paddle
@@ -13,7 +14,8 @@ class Controller:
         self.window_width = 750
         self.window_height = 800
         self.green = (6, 168, 0)
-        obstacle_length = 75
+        obstacle_long = 75
+        obstacle_thin = 2
         
 
         self.screen = pygame.display.set_mode([self.window_width, self.window_height])
@@ -21,8 +23,14 @@ class Controller:
         self.sample_paddle = Paddle()
         self.red_paddle = Paddle((self.window_width / 2) - (self.sample_paddle.width / 2), buffer, "red")
         self.blue_paddle = Paddle((self.window_width / 2) - (self.sample_paddle.width / 2), (self.window_height - buffer - self.sample_paddle.height), "blue")
-        self.obstacle1 = Obstacle((self.window_width - obstacle_length), .25*(self.window_height) - .5*(obstacle_length), obstacle_length)
-        self.obstacle2 = Obstacle(0, .75*(self.window_height) - .5*(obstacle_length), obstacle_length)
+        self.obstacle1_top = Obstacle((self.window_width - obstacle_long - 100), .4*(self.window_height) - .5*(obstacle_long), obstacle_long, obstacle_thin)
+        self.obstacle1_right = Obstacle((self.window_width - 100), .4*(self.window_height) - .5*(obstacle_long), obstacle_thin, obstacle_long)
+        self.obstacle1_left = Obstacle((self.window_width - obstacle_long - 100), .4*(self.window_height) - .5*(obstacle_long), obstacle_thin, obstacle_long)
+        self.obstacle1_bottom = Obstacle((self.window_width - obstacle_long - 100), .4*(self.window_height) - .5*(obstacle_long) + obstacle_long, obstacle_long, obstacle_thin)
+        self.obstacle2_top = Obstacle(100, .6*(self.window_height) - .5*(obstacle_long), obstacle_long, obstacle_thin)
+        self.obstacle2_right = Obstacle(100 + obstacle_long, .6*(self.window_height) - .5*(obstacle_long), obstacle_thin, obstacle_long)
+        self.obstacle2_left = Obstacle(100, .6*(self.window_height) - .5*(obstacle_long), obstacle_thin, obstacle_long)
+        self.obstacle2_bottom = Obstacle(100, .6*(self.window_height) - .5*(obstacle_long) + obstacle_long, obstacle_long, obstacle_thin)
         
         self.red_score = red_score
         self.blue_score = blue_score
@@ -31,8 +39,14 @@ class Controller:
         self.allsprites.add(self.ball)
         self.allsprites.add(self.red_paddle)
         self.allsprites.add(self.blue_paddle)
-        self.allsprites.add(self.obstacle1)
-        self.allsprites.add(self.obstacle2)
+        self.allsprites.add(self.obstacle1_top)
+        self.allsprites.add(self.obstacle1_right)
+        self.allsprites.add(self.obstacle1_left)
+        self.allsprites.add(self.obstacle1_bottom)
+        self.allsprites.add(self.obstacle2_top)
+        self.allsprites.add(self.obstacle2_right)
+        self.allsprites.add(self.obstacle2_left)
+        self.allsprites.add(self.obstacle2_bottom)
         self.state = "HOME"
         
     def startscreenloop(self):
@@ -99,24 +113,39 @@ class Controller:
             instruwin_text_x_pos = 0
             instruwin_text_y_pos = instrugoal_text_y_pos + space_bw_text
             self.screen.blit(text, (instruwin_text_x_pos, instruwin_text_y_pos))
+            text = font.render("Press space to start each round", True, "white")
+            instrustart_text_x_pos = 0
+            instrustart_text_y_pos = instruwin_text_y_pos + space_bw_text
+            self.screen.blit(text, (instrustart_text_x_pos, instrustart_text_y_pos))
             pygame.display.flip()
 
     def score(self):
         font = pygame.font.Font(None, 48)
         self.red_score_text = font.render(f"{self.red_score}", True, "red")
         self.blue_score_text = font.render(f"{self.blue_score}", True, "blue")
-        self.screen.blit(self.red_score_text, (5, self.window_height / 4))
+        self.screen.blit(self.red_score_text, (3, self.window_height / 4))
         self.screen.blit(self.blue_score_text, (self.window_width - 20, 3 * (self.window_height / 4)))
         
     def gameloop(self):   
-        game_to = 3     
+        game_to = 3    
         while self.state == "GAME":
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.state = "QUIT"
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
-                        self.ball.y_vel = self.ball.max_vel
+                        direction = 0 
+                        if random.randint(-10, 10) > 0:
+                            direction = 1
+                        if random.randint(-10, 10) < 0:
+                            direction = -1
+                        self.ball.y_vel = self.ball.max_vel * direction
+                    if event.key == pygame.K_1:
+                        self.ball.x_vel = 2 * math.cos(math.radians(15))
+                        self.ball.y_vel = - 2 * math.sin(math.radians(15))
+                    if event.key == pygame.K_2:
+                        self.ball.x_vel = - 2 * math.cos(math.radians(15))
+                        self.ball.y_vel = 2 * math.sin(math.radians(15))
                     if event.key == pygame.K_ESCAPE:
                         self.state = "QUIT"
                     if event.key == pygame.K_a:
@@ -148,11 +177,28 @@ class Controller:
             
             if pygame.sprite.collide_rect(self.ball, self.blue_paddle):
                 self.ball.y_vel *= -1
-                self.ball.x_vel += random.uniform(-1, 1)
+                self.ball.x_vel = random.uniform(-1, 1)
             if pygame.sprite.collide_rect(self.ball, self.red_paddle):
                 self.ball.y_vel *= -1
-                self.ball.x_vel += random.uniform(-1, 1)
+                self.ball.x_vel = random.uniform(-1, 1)
                 
+            if pygame.sprite.collide_rect(self.ball, self.obstacle1_top):
+                self.ball.y_vel *= -1
+            if pygame.sprite.collide_rect(self.ball, self.obstacle2_top):
+                self.ball.y_vel *= -1
+            if pygame.sprite.collide_rect(self.ball, self.obstacle1_bottom):
+                self.ball.y_vel *= -1
+            if pygame.sprite.collide_rect(self.ball, self.obstacle2_bottom):
+                self.ball.y_vel *= -1
+            if pygame.sprite.collide_rect(self.ball, self.obstacle1_right):
+                self.ball.x_vel *= -1
+            if pygame.sprite.collide_rect(self.ball, self.obstacle2_right):
+                self.ball.x_vel *= -1
+            if pygame.sprite.collide_rect(self.ball, self.obstacle1_left):
+                self.ball.x_vel *= -1
+            if pygame.sprite.collide_rect(self.ball, self.obstacle2_left):
+                self.ball.x_vel *= -1
+             
             if self.ball.rect.x < 0:
                 self.ball.x_vel *= -1
             if self.ball.rect.x > self.window_width - self.ball.radius:
@@ -165,7 +211,6 @@ class Controller:
                 self.blue_paddle.reset()
             if self.ball.rect.y > self.blue_paddle.rect.y + self.blue_paddle.height:
                 self.red_score += 1
-                self.blue_score += 1
                 self.ball.reset()
                 self.red_paddle.reset()
                 self.blue_paddle.reset()

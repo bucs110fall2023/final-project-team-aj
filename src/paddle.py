@@ -13,7 +13,7 @@ class Paddle(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.paddle_vel = 50
+        self.paddle_vel = 90
 
     def move(self, dir):
         if dir == "right":
