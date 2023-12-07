@@ -23,6 +23,6 @@ class Ball(pygame.sprite.Sprite):
 
     def reset(self):
         self.rect.x = self.starting_xpos
-        self.rect.x = self.starting_ypos
+        self.rect.y = self.starting_ypos
         self.y_vel = 0
-        self.x_vel *= -1
+        self.x_vel = 0

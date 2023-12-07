@@ -3,27 +3,36 @@ import random
 
 from src.ball import Ball
 from src.paddle import Paddle
+from src.obstacle import Obstacle
 
 class Controller:
     def __init__(self, red_score=0, blue_score=0):
         pygame.init()
         buffer = 10
+        ball_radius = 30
         self.window_width = 750
         self.window_height = 800
         self.green = (6, 168, 0)
+        obstacle_length = 75
+        
 
         self.screen = pygame.display.set_mode([self.window_width, self.window_height])
-        self.ball = Ball(self.window_width / 2, self.window_height / 2, 30)
+        self.ball = Ball(self.window_width / 2, self.window_height / 2 - (ball_radius / 2), ball_radius)
         self.sample_paddle = Paddle()
-
         self.red_paddle = Paddle((self.window_width / 2) - (self.sample_paddle.width / 2), buffer, "red")
         self.blue_paddle = Paddle((self.window_width / 2) - (self.sample_paddle.width / 2), (self.window_height - buffer - self.sample_paddle.height), "blue")
+        self.obstacle1 = Obstacle((self.window_width - obstacle_length), .25*(self.window_height) - .5*(obstacle_length), obstacle_length)
+        self.obstacle2 = Obstacle(0, .75*(self.window_height) - .5*(obstacle_length), obstacle_length)
+        
         self.red_score = red_score
         self.blue_score = blue_score
+        
         self.allsprites = pygame.sprite.Group()
         self.allsprites.add(self.ball)
         self.allsprites.add(self.red_paddle)
         self.allsprites.add(self.blue_paddle)
+        self.allsprites.add(self.obstacle1)
+        self.allsprites.add(self.obstacle2)
         self.state = "HOME"
         
     def startscreenloop(self):
@@ -99,7 +108,8 @@ class Controller:
         self.screen.blit(self.red_score_text, (5, self.window_height / 4))
         self.screen.blit(self.blue_score_text, (self.window_width - 20, 3 * (self.window_height / 4)))
         
-    def gameloop(self):        
+    def gameloop(self):   
+        game_to = 3     
         while self.state == "GAME":
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -117,27 +127,74 @@ class Controller:
                         self.blue_paddle.move("left")
                     if event.key == pygame.K_RIGHT:
                         self.blue_paddle.move("right")
+            if self.red_score >= game_to or self.blue_score >= game_to:
+                self.state = "END"
+                    
             
             self.screen.fill(self.green)
             pygame.draw.line(self.screen, "white", (0, self.window_height / 2), (self.window_width, self.window_height / 2), 2)
             self.allsprites.draw(self.screen)
             self.ball.move()
+            self.score()
+            
+            if self.red_paddle.rect.x < 0:
+                self.red_paddle.rect.x = 0
+            if self.red_paddle.rect.x > self.window_width - self.red_paddle.width:
+                self.red_paddle.rect.x = self.window_width - self.red_paddle.width
+            if self.blue_paddle.rect.x < 0:
+                self.blue_paddle.rect.x = 0
+            if self.blue_paddle.rect.x > self.window_width - self.blue_paddle.width:
+                self.blue_paddle.rect.x = self.window_width - self.blue_paddle.width
             
             if pygame.sprite.collide_rect(self.ball, self.blue_paddle):
                 self.ball.y_vel *= -1
                 self.ball.x_vel += random.uniform(-1, 1)
             if pygame.sprite.collide_rect(self.ball, self.red_paddle):
                 self.ball.y_vel *= -1
+                self.ball.x_vel += random.uniform(-1, 1)
                 
             if self.ball.rect.x < 0:
                 self.ball.x_vel *= -1
-            if self.ball.rect.x > self.window_width:
+            if self.ball.rect.x > self.window_width - self.ball.radius:
                 self.ball.x_vel *= -1
+                
+            if self.ball.rect.y < self.red_paddle.rect.y:
+                self.blue_score += 1
+                self.ball.reset()
+                self.red_paddle.reset()
+                self.blue_paddle.reset()
+            if self.ball.rect.y > self.blue_paddle.rect.y + self.blue_paddle.height:
+                self.red_score += 1
+                self.blue_score += 1
+                self.ball.reset()
+                self.red_paddle.reset()
+                self.blue_paddle.reset()
                 
             pygame.display.flip()
 
     def endscreenloop(self):
-        pass
+        while self.state == "END":
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.state = "QUIT"
+            
+            if self.red_score >= self.blue_score:
+                winner = "RED"
+            elif self.red_score <= self.blue_score:
+                winner = "BLUE"
+                
+            self.screen.fill(self.green)
+            font = pygame.font.Font(None, 100)
+            text = font.render(f"TEAM {winner} WINS!", True, "white")
+            winner_text_rect = text.get_rect()
+            half_text_width = winner_text_rect.width // 2
+            half_text_height = winner_text_rect.height // 2
+            winner_text_x_pos = (self.window_width // 2) - half_text_width
+            winner_text_y_pos = (self.window_height // 4) - half_text_height
+            winner_text_rect_center = (winner_text_x_pos, winner_text_y_pos)
+            self.screen.blit(text, winner_text_rect_center)
+        
+            pygame.display.flip()
 
     def mainloop(self):
         while self.state != "QUIT":
