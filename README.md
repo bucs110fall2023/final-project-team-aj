@@ -24,7 +24,7 @@ Our program is a game that replicates the classic arcade game, Pong, where two p
 
 ### Final Design
 
-![final gui](assets/finalgui.jpg)
+![final gui](assets/final_gui.png)
 
 ## Program Design
 
