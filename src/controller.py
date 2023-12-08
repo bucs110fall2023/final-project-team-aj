@@ -218,6 +218,17 @@ class Controller:
             pygame.display.flip()
 
     def endscreenloop(self):
+        
+        new_result = f"PREVIOUS GAME FINAL SCORE: Blue: {self.blue_score} Red: {self.red_score}"
+        try:
+            with open("previousscore.txt", "r") as fptr:
+                old_result = fptr.read()
+        except FileNotFoundError as e:
+            old_result = None
+        with open("previousscore.txt", "w") as fptr:
+                fptr.write(new_result)
+                
+                
         while self.state == "END":
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -248,7 +259,18 @@ class Controller:
             score_text_y_pos = (self.window_height // 4) - half_text_height + 60
             score_text_rect_center = (score_text_x_pos, score_text_y_pos)
             self.screen.blit(text, score_text_rect_center)
-        
+            
+            if old_result != None:
+                font = pygame.font.Font(None, 40)
+                text = font.render(old_result, True, "white")
+                previousscore_text_rect = text.get_rect()
+                half_text_width = previousscore_text_rect.width // 2
+                half_text_height = previousscore_text_rect.height // 2
+                previousscore_text_x_pos = (self.window_width // 2) - half_text_width
+                previousscore_text_y_pos = (self.window_height // 4) - half_text_height + 100
+                previousscore_text_rect_center = (previousscore_text_x_pos, previousscore_text_y_pos)
+                self.screen.blit(text, previousscore_text_rect_center)
+            
             pygame.display.flip()
 
     def mainloop(self):
