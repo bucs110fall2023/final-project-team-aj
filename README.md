@@ -50,11 +50,17 @@ The Obstacle class creates an obstacle and takes in multiple arguments (the x lo
 
 Controller:
 The Controller class creates the entire program and puts all of the different classes together so they have a purpose and use. The Controller class has the following methods:
+
 __init__(): Initializes all of the objects and variables used in the program. 
+
 startscreenloop(): Creates the home screen with all of the information on the screen that opens right when the program is ran.
+
 score(): Responsible for displaying the score on the screen.
+
 gameloop(): Creates and organizes everything that is used in the actual game. This includes but is not limited to drawing the game board, accounting for collisions between the ball, paddle, and walls, and changing the score when a goal is scored.
+
 endscreenloop(): Creates the end screen that displays the winner of the game and the final score when one of the teams reaches the maximum score.
+
 mainloop(): Responsible for changing the screens based on what state the program is in.
 
 ## ATP
