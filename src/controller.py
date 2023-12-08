@@ -19,7 +19,7 @@ class Controller:
         
 
         self.screen = pygame.display.set_mode([self.window_width, self.window_height])
-        self.ball = Ball(self.window_width / 2, self.window_height / 2 - (ball_radius / 2), ball_radius)
+        self.ball = Ball(self.window_width / 2 - (ball_radius / 2), self.window_height / 2 - (ball_radius / 2), ball_radius)
         self.sample_paddle = Paddle()
         self.red_paddle = Paddle((self.window_width / 2) - (self.sample_paddle.width / 2), buffer, "red")
         self.blue_paddle = Paddle((self.window_width / 2) - (self.sample_paddle.width / 2), (self.window_height - buffer - self.sample_paddle.height), "blue")
@@ -238,6 +238,16 @@ class Controller:
             winner_text_y_pos = (self.window_height // 4) - half_text_height
             winner_text_rect_center = (winner_text_x_pos, winner_text_y_pos)
             self.screen.blit(text, winner_text_rect_center)
+            
+            font = pygame.font.Font(None, 60)
+            text = font.render(f"FINAL SCORE: Blue: {self.blue_score} Red: {self.red_score}", True, "white")
+            score_text_rect = text.get_rect()
+            half_text_width = score_text_rect.width // 2
+            half_text_height = score_text_rect.height // 2
+            score_text_x_pos = (self.window_width // 2) - half_text_width
+            score_text_y_pos = (self.window_height // 4) - half_text_height + 60
+            score_text_rect_center = (score_text_x_pos, score_text_y_pos)
+            self.screen.blit(text, score_text_rect_center)
         
             pygame.display.flip()
 

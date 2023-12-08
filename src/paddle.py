@@ -22,5 +22,5 @@ class Paddle(pygame.sprite.Sprite):
             self.rect.x -= self.paddle_vel
 
     def reset(self):
-        self.x = self.starting_xpos
-        self.y = self.starting_ypos
+        self.rect.x = self.starting_xpos
+        self.rect.y = self.starting_ypos

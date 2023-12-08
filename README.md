@@ -30,7 +30,7 @@ Our program is a game that replicates the classic arcade game, Pong, where two p
 
 ### Features
 
-1. Home Screen(s)
+1. Home Screen
 2. Game Screen (including score)
 3. Paddles
 4. Ball
@@ -39,7 +39,23 @@ Our program is a game that replicates the classic arcade game, Pong, where two p
 
 ### Classes
 
-- << You should have a list of each of your classes with a description >>
+Ball:
+The Ball class creates the ball and takes in three arguments (the x location, the y location, and the radius). This class also has a method that moves the ball across the screen and a reset method that resets the ball to the middle of the screen.
+
+Paddle:
+The Paddle class creates a paddle and takes in multiple arguments (the x location, the y location, the color of the paddle, the width of the paddle, and the height of the paddle). The paddle has a move method that moves right when the direction that it takes in is "right" and left when the direction is "left". The Paddle class also has a reset method that resets the paddle to its starting position.
+
+Obstacle:
+The Obstacle class creates an obstacle and takes in multiple arguments (the x location, the y location, the width of the obstacle, and the height of the obstacle).
+
+Controller:
+The Controller class creates the entire program and puts all of the different classes together so they have a purpose and use. The Controller class has the following methods:
+__init__(): Initializes all of the objects and variables used in the program. 
+startscreenloop(): Creates the home screen with all of the information on the screen that opens right when the program is ran.
+score(): Responsible for displaying the score on the screen.
+gameloop(): Creates and organizes everything that is used in the actual game. This includes but is not limited to drawing the game board, accounting for collisions between the ball, paddle, and walls, and changing the score when a goal is scored.
+endscreenloop(): Creates the end screen that displays the winner of the game and the final score when one of the teams reaches the maximum score.
+mainloop(): Responsible for changing the screens based on what state the program is in.
 
 ## ATP
 
@@ -51,13 +67,13 @@ Test Steps:
 Run the program.
 Press Space Bar to open the game.
 Push the right arrow key.
-Verify the bottom paddle moves to the right.
+Verify the blue paddle moves to the right.
 Push the left arrow key.
-Verify the bottom paddle moves to the left.
+Verify the blue paddle moves to the left.
 Push the "d" key.
-Verify the top paddle moves to the right.
+Verify the red paddle moves to the right.
 Push the "a" key.
-Verify the top paddle moves to the left.
+Verify the red paddle moves to the left.
 
 Expected Outcome: The paddles should move left and right in response to the keyboard key inputs.
 
@@ -71,25 +87,25 @@ Run the program.
 Press Space Bar to open the game.
 Press Space Bar to begin the game.
 Do not touch the right arrow key, the left arrow key, the "d" key, or the "a" key.
-Verify that the ball moves on the screen up and down.
+Verify that the ball moves on the screen.
 
-Expected Outcome: When the space bar is initially pressed, the ball should move up and down as it bounces between the stationary paddles. 
+Expected Outcome: When the space bar is initially pressed, the ball should move across the screen depending on how it bounces off of the paddles. 
 
 
 Test Case 3: Paddle Collisions
 
-Test Description: Verify that the ball bounces off of the paddles as expected.
+Test Description: Verify that the ball bounces off of the paddles.
 
 Test Steps:
 Run the program.
 Press Space Bar to open the game.
 Press Space Bar to begin the game.
-Move the first paddle so that the ball bounces off the side of the paddle.
-Verify that the ball bounces off of the paddle at an angle depending on where the ball hits the paddle.
-Move the other paddle so that the ball bounces off the side of this paddle.
-Verify that the ball bounces off of the paddle at an angle depending on where the ball hits this paddle. 
+Move the first paddle so that the ball bounces off of the paddle.
+Verify that the ball bounces off of the paddle.
+Move the other paddle so that the ball bounces off of this paddle.
+Verify that the ball bounces off of this paddle. 
 
-Expected Outcome: When the ball bounces off of each paddle, it should bounce off at an angle depending on where the ball hits the paddle. The closer to the edge of the paddle, the greater the angle the ball bounces off. 
+Expected Outcome: When the space bar is initially pressed, the ball should bounce off of each paddle.
 
 
 Test Case 4: Wall Collisions
@@ -100,7 +116,7 @@ Test Steps:
 Run the program.
 Press Space Bar to open the game.
 Press Space Bar to begin the game.
-Let the ball bounce off of the side of the first paddle.
+Let the ball bounce off of the first paddle.
 Let the ball move across the screen.
 Verify that the ball bounces off of both side walls.
 
@@ -109,20 +125,20 @@ Expected Outcome: When the ball hits one of the side walls, it should bounce off
 
 Test Case 5: Obstacle Collisions
 
-Test Description: Verify that the ball bounces off of the triangles appropriately.
+Test Description: Verify that the ball bounces off of the squares appropriately.
 
 Test Steps:
 Run the program.
 Press Space Bar to open the game.
 Press the "1" key.
-Verify that the ball bounces off of the bottom triangle.
+Verify that the ball bounces off of the top square.
 Exit the program.
 Rerun the program.
 Press Space Bar to begin.
 Press the "2" key.
-Verify that the ball bounces off of the top triangle.
+Verify that the ball bounces off of the bottom square.
 
-Expected Outcome: The ball should bounce off of the triangles throughout the duration of the game depending on where and at what angle the ball hits the triangle.
+Expected Outcome: The ball should bounce off of the squares throughout the duration of the game depending on where and at what angle the ball hits the each square.
 
 
 Test Case 6: Score
@@ -146,13 +162,13 @@ Expected Outcome: When the ball passes a paddle, the opposite player's score inc
 
 Test Case 7: Game Over
 
-Test Description: Confirm that the screen changes to the end screen when one of the players reaches 7 goals.
+Test Description: Confirm that the screen changes to the end screen when one of the players reaches 3 goals.
 
 Test Steps:
 Run the program.
 Press Space Bar to open the game.
 Press Space Bar to begin the game.
-Play until one of the players reaches 7 points.
+Play until one of the players reaches 3 points.
 Verify that the end screen pops up stating which player won the game as well as the final score.
 
-Expected Outcome: When one of the players reaches 7 points, the end screen pops up stating which player won the game as well as the final score.
+Expected Outcome: When one of the players reaches 3 points, the end screen pops up stating which player won the game as well as the final score.
