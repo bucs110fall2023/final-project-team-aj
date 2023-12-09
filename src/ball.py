@@ -2,7 +2,35 @@ import pygame
 
 # Model
 class Ball(pygame.sprite.Sprite):
+    """
+    A class representing a ball in a game.
+
+    Attributes:
+    - starting_xpos (int): The initial x-coordinate of the ball.
+    - starting_ypos (int): The initial y-coordinate of the ball.
+    - radius (int): The radius of the ball.
+    - max_vel (int): The maximum velocity of the ball.
+    - x_vel (int): The current velocity of the ball in the x-direction.
+    - y_vel (int): The current velocity of the ball in the y-direction.
+    - image (pygame.Surface): The surface representing the visual appearance of the ball.
+    - rect (pygame.Rect): The rectangle that defines the position and size of the ball.
+
+    Methods:
+    - __init__(self, x, y, radius): Initializes a new Ball instance with the specified parameters.
+    - move(self): Updates the position of the ball based on its current velocity.
+    - reset(self): Resets the position and velocity of the ball to its initial state.
+    """
+
     def __init__(self, x, y, radius):
+        """
+        Initializes a new Ball instance.
+
+        Parameters:
+        - x (int): The initial x-coordinate of the ball.
+        - y (int): The initial y-coordinate of the ball.
+        - radius (int): The radius of the ball.
+        """
+
         super().__init__()
         self.starting_xpos = x
         self.starting_ypos = y
@@ -18,10 +46,17 @@ class Ball(pygame.sprite.Sprite):
         self.rect.y = y
 
     def move(self):
+        """
+        Updates the position of the ball based on its current velocity.
+        """
+        
         self.rect.x += self.x_vel
         self.rect.y += self.y_vel
 
     def reset(self):
+        """
+        Resets the position and velocity of the ball to its initial state.
+        """
         self.rect.x = self.starting_xpos
         self.rect.y = self.starting_ypos
         self.y_vel = 0

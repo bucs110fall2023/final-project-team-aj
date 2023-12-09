@@ -7,7 +7,41 @@ from src.paddle import Paddle
 from src.obstacle import Obstacle
 
 class Controller:
+    """
+    Class representing the main controller for the game.
+
+    Attributes:
+    - red_score (int): The initial score for the red team.
+    - blue_score (int): The initial score for the blue team.
+    - window_width (int): The width of the game window.
+    - window_height (int): The height of the game window.
+    - green (tuple): RGB values representing the color green.
+    - screen (pygame.Surface): The game window surface.
+    - ball (Ball): The ball object in the game.
+    - sample_paddle (Paddle): A sample paddle used for initialization.
+    - red_paddle (Paddle): The paddle for the red team.
+    - blue_paddle (Paddle): The paddle for the blue team.
+    - obstacle1_top (Obstacle): The first obstacle on the top.
+    - obstacle1_right (Obstacle): The first obstacle on the right.
+    - obstacle1_left (Obstacle): The first obstacle on the left.
+    - obstacle1_bottom (Obstacle): The first obstacle on the bottom.
+    - obstacle2_top (Obstacle): The second obstacle on the top.
+    - obstacle2_right (Obstacle): The second obstacle on the right.
+    - obstacle2_left (Obstacle): The second obstacle on the left.
+    - obstacle2_bottom (Obstacle): The second obstacle on the bottom.
+    - red_score (int): The current score of the red team.
+    - blue_score (int): The current score of the blue team.
+    - allsprites (pygame.sprite.Group): A group containing all game sprites.
+    - state (str): The current state of the game ("HOME", "GAME", "END", or "QUIT").
+    """
     def __init__(self, red_score=0, blue_score=0):
+        """
+        Initializes the game controller with optional initial scores.
+
+        Parameters:
+        - red_score (int): The initial score for the red team (default is 0).
+        - blue_score (int): The initial score for the blue team (default is 0).
+        """
         pygame.init()
         buffer = 10
         ball_radius = 30
@@ -50,6 +84,12 @@ class Controller:
         self.state = "HOME"
         
     def startscreenloop(self):
+        """
+
+        Game loop for the start screen.
+
+        Displays information about the game and waits for user input to start or quit.
+        """
         while self.state == "HOME":
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -72,7 +112,7 @@ class Controller:
             self.screen.blit(text, intro_text_rect_center)
 
             font = pygame.font.Font(None, 48)
-            text = font.render("By: Aaron Damsky and Joseph Kessler", True, "white")
+            text = font.render("By: Aaron Damsky and Joseph Kesler", True, "white")
             text_rect = text.get_rect()
             half_text_width = text_rect.width // 2
             half_text_height = text_rect.height // 2
@@ -120,6 +160,9 @@ class Controller:
             pygame.display.flip()
 
     def score(self):
+        """
+        Displays the current scores on the game window.
+         """
         font = pygame.font.Font(None, 48)
         self.red_score_text = font.render(f"{self.red_score}", True, "red")
         self.blue_score_text = font.render(f"{self.blue_score}", True, "blue")
@@ -127,6 +170,11 @@ class Controller:
         self.screen.blit(self.blue_score_text, (self.window_width - 20, 3 * (self.window_height / 4)))
         
     def gameloop(self):   
+        """
+        Main game loop for the gameplay.
+
+        Handles user input, updates game state, and checks for game-ending conditions.
+        """
         game_to = 3    
         while self.state == "GAME":
             for event in pygame.event.get():
@@ -218,7 +266,11 @@ class Controller:
             pygame.display.flip()
 
     def endscreenloop(self):
-        
+        """
+        Game loop for the end screen.
+
+        Displays the winner and final scores, and updates the previous game result.
+        """  
         new_result = f"PREVIOUS GAME FINAL SCORE: Blue: {self.blue_score} Red: {self.red_score}"
         try:
             with open("previousscore.txt", "r") as fptr:
@@ -274,6 +326,11 @@ class Controller:
             pygame.display.flip()
 
     def mainloop(self):
+        """
+        Main loop controlling the overall flow of the game.
+
+        Switches between different game states (HOME, GAME, END) until the user chooses to quit.
+        """
         while self.state != "QUIT":
             if self.state == "HOME":
                 self.startscreenloop()

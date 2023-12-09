@@ -1,7 +1,25 @@
 import pygame
 
 class Screens:
+    """
+    A class representing different screens in a game.
+
+    Attributes:
+    - window_width (int): The width of the game window.
+    - window_height (int): The height of the game window.
+    - screen (pygame.Surface): The main surface for rendering the game.
+    - green (tuple): RGB values representing the green color.
+
+    Methods:
+    - __init__(self): Initializes a new Screens instance and sets up the game window.
+    - startscreen(self): Renders the start screen with game instructions.
+    - gamescreen(self): Renders the main game screen with a dividing line.
+    - endscreen(self, winner="BLUE", red_score=0, blue_score=0): Renders the end screen with the winner and scores.
+    """
     def __init__(self):
+        """
+        Initializes a new Screens instance and sets up the game window.
+        """
         pygame.init()
         self.window_width = 750
         self.window_height = 800
@@ -9,6 +27,9 @@ class Screens:
         self.green = (6, 168, 0)
         
     def startscreen(self):
+        """
+        Renders the start screen with game instructions.
+        """
         self.screen.fill(self.green)
         font = pygame.font.Font(None, 100)
         text = font.render("PADDLES", True, "white")
@@ -66,12 +87,23 @@ class Screens:
         pygame.display.flip()
         
     def gamescreen(self):
+        """
+        Renders the main game screen with a dividing line.
+        """
         self.screen.fill(self.green)
         pygame.draw.line(self.screen, "white", (0, self.window_height/2), (self.window_width, self.window_height/2), 2)
         
         pygame.display.flip()
         
     def endscreen(self, winner="BLUE", red_score=0, blue_score=0):
+        """
+        Renders the end screen with the winner and scores.
+
+        Parameters:
+        - winner (str): The winning team, default is "BLUE".
+        - red_score (int): The score of the red team.
+        - blue_score (int): The score of the blue team.
+        """
         self.screen.fill(self.green)
         font = pygame.font.Font(None, 100)
         text = font.render(f"TEAM {winner} WINS!", True, "white")
